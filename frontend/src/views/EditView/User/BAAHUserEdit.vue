@@ -202,7 +202,17 @@
           </a-row>
         </div>
 
-        <UserNotifyConfig v-model="formData.Notify" :loading="loading" @save="handleFieldSave" />
+        <!-- 额外脚本组件 -->
+        <ExtraScriptSection v-model:form-data="formData" :loading="loading" @save="handleFieldSave" />
+
+        <!-- 通知配置组件；scriptId / userId 是自定义 Webhook 区块的渲染前提 -->
+        <UserNotifyConfig
+          v-model="formData.Notify"
+          :loading="loading"
+          :script-id="scriptId"
+          :user-id="userId"
+          @save="handleFieldSave"
+        />
       </a-form>
     </a-card>
   </div>
@@ -219,6 +229,7 @@ import { useUserApi } from '@/composables/useUserApi.ts'
 import { useScriptApi } from '@/composables/useScriptApi.ts'
 import { parseStatusTagList } from '@/composables/useStatusTag.ts'
 import UserNotifyConfig from '@/components/UserNotifyConfig.vue'
+import ExtraScriptSection from '@/components/ExtraScriptSection.vue'
 
 const { t } = useI18n()
 
@@ -249,6 +260,10 @@ const getDefaultBAAHUserData = () => ({
     Status: true,
     RemainedDay: -1,
     ConfigName: '',
+    IfScriptBeforeTask: false,
+    ScriptBeforeTask: '',
+    IfScriptAfterTask: false,
+    ScriptAfterTask: '',
     Notes: '',
     Tag: '',
   },

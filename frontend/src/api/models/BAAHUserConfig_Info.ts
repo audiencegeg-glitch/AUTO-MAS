@@ -20,6 +20,22 @@ export type BAAHUserConfig_Info = {
      */
     ConfigName?: (string | null);
     /**
+     * 是否执行任务前脚本
+     */
+    IfScriptBeforeTask?: (boolean | null);
+    /**
+     * 任务前脚本路径
+     */
+    ScriptBeforeTask?: (string | null);
+    /**
+     * 是否执行任务后脚本
+     */
+    IfScriptAfterTask?: (boolean | null);
+    /**
+     * 任务后脚本路径
+     */
+    ScriptAfterTask?: (string | null);
+    /**
      * 备注
      */
     Notes?: (string | null);

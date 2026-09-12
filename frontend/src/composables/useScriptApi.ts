@@ -1290,6 +1290,22 @@ export function useScriptApi() {
                           baahUserData.Info?.ConfigName !== undefined
                             ? baahUserData.Info.ConfigName
                             : '',
+                        IfScriptBeforeTask:
+                          baahUserData.Info?.IfScriptBeforeTask !== undefined
+                            ? baahUserData.Info.IfScriptBeforeTask
+                            : false,
+                        ScriptBeforeTask:
+                          baahUserData.Info?.ScriptBeforeTask !== undefined
+                            ? baahUserData.Info.ScriptBeforeTask
+                            : '',
+                        IfScriptAfterTask:
+                          baahUserData.Info?.IfScriptAfterTask !== undefined
+                            ? baahUserData.Info.IfScriptAfterTask
+                            : false,
+                        ScriptAfterTask:
+                          baahUserData.Info?.ScriptAfterTask !== undefined
+                            ? baahUserData.Info.ScriptAfterTask
+                            : '',
                         Notes:
                           baahUserData.Info?.Notes !== undefined ? baahUserData.Info.Notes : '',
                         Tag:

@@ -43,6 +43,7 @@ from app.models.emulator import DeviceBase
 from app.models.schema import WSTaskNoticeData
 from app.models.task import LogRecord, ScriptItem, TaskExecuteBase
 from app.services import Notify, System
+from app.task.general.tools import execute_script_task
 from app.utils import LogMonitor, ProcessManager, compile_log_signs, get_logger
 from app.utils.constants import UTC4
 
@@ -235,6 +236,13 @@ class AutoProxyTask(TaskExecuteBase):
         logger.info(f"开始代理用户: {self.cur_user_uid}")
         self.cur_user_item.status = "运行"
 
+        ## 任务前脚本：每用户只跑一次，不随重试重复执行
+        if self.cur_user_config.get("Info", "IfScriptBeforeTask"):
+            await execute_script_task(
+                Path(self.cur_user_config.get("Info", "ScriptBeforeTask")),
+                "脚本前任务",
+            )
+
         for i in range(self.script_config.get("Run", "RunTimesLimit")):
             if self.run_book:
                 break
@@ -262,6 +270,13 @@ class AutoProxyTask(TaskExecuteBase):
                 f"用户: {self.cur_user_uid} - 代理任务异常: {self.cur_user_log.status}"
             )
             await asyncio.sleep(3)
+
+        ## 任务后脚本：每用户只跑一次，无论本次是否成功都执行
+        if self.cur_user_config.get("Info", "IfScriptAfterTask"):
+            await execute_script_task(
+                Path(self.cur_user_config.get("Info", "ScriptAfterTask")),
+                "脚本后任务",
+            )
 
     async def _ensure_emulator_online(self) -> bool:
         """由本软件拉起模拟器并等待其在线。

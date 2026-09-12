@@ -1831,6 +1831,14 @@ class BAAHUserConfig_Info(BaseModel):
     Status: Optional[bool] = Field(default=None, description="用户状态")
     RemainedDay: Optional[int] = Field(default=None, description="剩余天数")
     ConfigName: Optional[str] = Field(default=None, description="BAAH 配置文件名")
+    IfScriptBeforeTask: Optional[bool] = Field(
+        default=None, description="是否执行任务前脚本"
+    )
+    ScriptBeforeTask: Optional[str] = Field(default=None, description="任务前脚本路径")
+    IfScriptAfterTask: Optional[bool] = Field(
+        default=None, description="是否执行任务后脚本"
+    )
+    ScriptAfterTask: Optional[str] = Field(default=None, description="任务后脚本路径")
     Notes: Optional[str] = Field(default=None, description="备注")
     Tag: Optional[str] = Field(
         default=None, description="用户标签列表（JSON字符串，TagItem的dict列表）"
